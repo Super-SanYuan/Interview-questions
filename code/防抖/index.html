@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="btn">click</button>
+    <script>
+      const btn = document.querySelector('.btn')
+      btn.onclick = debounce(function () {
+        console.log(1)
+      }, 10)
+
+      /**
+       * 防抖可以有效防止用户在一定时间内多次触发某一事件
+       * 方法接受两个参数, 用户需要触发的参数 延迟的时间
+       */
+      function debounce(fn, wait) {
+        let timer = null
+        return function (...arguments) {
+          console.log('timer', timer)
+
+          if (timer) {
+            clearInterval(timer)
+          }
+          timer = setTimeout(() => {
+            fn.call(this, arguments)
+          }, wait)
+        }
+      }
+    </script>
+  </body>
+</html>
