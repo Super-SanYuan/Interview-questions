@@ -9,3 +9,5 @@
 - [防抖](./code/防抖/index.html)
 
 - [myVue](./code/myVue/index.html)
+
+- [EventBus](./code/EventBus/index.html)
