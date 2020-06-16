@@ -6,28 +6,32 @@
     <title>Document</title>
   </head>
   <body>
-    <button class="btn">click</button>
+    <input type="text" id="input" />
     <script>
-      const btn = document.querySelector('.btn')
-      btn.onclick = debounce(function () {
-        console.log(1)
-      }, 10)
+      const btn = document.querySelector('#input')
+      btn.oninput = debounce(
+        function () {
+          console.log(1)
+        },
+        300,
+        true
+      )
 
       /**
        * 防抖可以有效防止用户在一定时间内多次触发某一事件
        * 方法接受两个参数, 用户需要触发的参数 延迟的时间
        */
-      function debounce(fn, wait) {
-        let timer = null
-        return function (...arguments) {
-          console.log('timer', timer)
-
-          if (timer) {
-            clearInterval(timer)
+      function debounce(fn, wait, imm) {
+        let timerID = null
+        return (args) => {
+          if (timerID) clearTimeout(timerID)
+          if (imm) {
+            fn.call(this, args)
+          } else {
+            timerID = setTimeout(() => {
+              fn.call(this, args)
+            }, wait)
           }
-          timer = setTimeout(() => {
-            fn.call(this, arguments)
-          }, wait)
         }
       }
     </script>
