@@ -20,7 +20,7 @@
             .join('&')
           // 加上 callback (与后端约定)
           script.src = url + '?callback=__fn__&' + query
-          script.onload = script.onerror = (e) => reject(e)
+          script.onerror = (e) => reject(e)
           document.head.appendChild(script)
           document.head.removeChild(script)
         })
