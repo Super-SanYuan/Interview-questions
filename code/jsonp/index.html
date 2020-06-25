@@ -27,11 +27,15 @@
       }
 
       ;(async () => {
-        const res = await jsonp(
-          'https://jsonplaceholder.typicode.com/users/2',
-          { id: 1, age: 3 }
-        )
-        console.log('res', res)
+        try {
+          const res = await jsonp(
+            'https://jsonplaceholder.typicode.com/users/2',
+            { id: 1, age: 3 }
+          )
+          console.log('res', res)
+        } catch (e) {
+          console.log('error-->', e)
+        }
       })()
     </script>
   </body>
