@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSONP</title>
+  </head>
+  <body>
+    <script>
+      const jsonp = (url, data = {}) => {
+        // 返回一个 promise
+        return new Promise((resolve, reject) => {
+          // 暴露方法到window
+          window.__fn__ = (data) => resolve(data)
+          // 创建标签
+          const script = document.createElement('script')
+          // 处理data  {a: 1, b: 2} => ?a=1&b=2
+          const query = Object.entries(data)
+            .map((i) => `${i[0]}=${i[1]}`)
+            .join('&')
+          // 加上 callback (与后端约定)
+          script.src = url + '?callback=__fn__&' + query
+          script.onload = script.onerror = (e) => reject(e)
+          document.head.appendChild(script)
+          document.head.removeChild(script)
+        })
+      }
+
+      ;(async () => {
+        const res = await jsonp(
+          'https://jsonplaceholder.typicode.com/users/2',
+          { id: 1, age: 3 }
+        )
+        console.log('res', res)
+      })()
+    </script>
+  </body>
+</html>
