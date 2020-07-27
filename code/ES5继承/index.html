@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ES5继承</title>
+  </head>
+  <body>
+    <script>
+      function Animal(name, age) {
+        this.name = name
+        this.age = age
+      }
+      Animal.prototype.eat = function (food) {
+        console.log(`我叫${this.name}, 我今年${this.age}, 我在吃${food}`)
+      }
+      const animal = new Animal('jack', 1)
+      // dog.eat('粑粑')
+
+      function Dog(sex) {
+        Animal.call(this, 'Lucky', 2)
+        this.sex = sex
+      }
+      Dog.prototype = new Animal()
+      Dog.prototype.constructor = Dog
+      Dog.prototype.sleep = function () {
+        console.log(`我叫${this.name}, 我今年${this.age}, 我在睡觉`)
+      }
+      const dog = new Dog('女孩子')
+      dog.sleep()
+      dog.eat('嘿嘿')
+
+      console.dir(dog)
+      console.dir(animal)
+    </script>
+  </body>
+</html>
