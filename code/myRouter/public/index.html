@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="#">原生</a>
+    <a href="#pink">粉色</a>
+    <a href="#green">绿色</a>
+    <script src="router.js"></script>
+    <script>
+      let Route = new Router();
+      Route.route('#', () => {
+        document.body.style.backgroundColor  = 'white'
+      })
+      Route.route('#pink', () => {
+        document.body.style.backgroundColor  = 'pink'
+      })
+      Route.route('#green', () => {
+        document.body.style.backgroundColor  = 'green'
+      })
+      document.body.addEventListener('click', (e) => {
+        if(e.target.tagName === 'A') {
+          e.preventDefault()
+          Route.go(e.target.getAttribute('href'))
+        }
+      });
+    </script>
+  </body>
+</html>
