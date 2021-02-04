@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="/jquery/jquery.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // 虚拟DOM 就是一个js对象
+      function h(tagName, opts) {
+        let vNode = Object.create(null);
+
+        Object.assign(vNode, {
+          tagName,
+          props: opts.props || {},
+          children: opts.children || [],
+        });
+
+        return vNode;
+      }
+
+      // 渲染函数
+      function render(vNode) {
+        if (typeof vNode === 'string') return document.createTextNode(vNode);
+
+        let $el = document.createElement(vNode.tagName);
+
+        for (const [key, value] of Object.entries(vNode.props)) {
+          $el.setAttribute(key, value);
+        }
+
+        for (const child of vNode.children) {
+          $el.appendChild(render(child));
+        }
+
+        return $el;
+      }
+
+      // mount
+      function mount($node, $target) {
+        return $target.appendChild($node)
+      }
+
+      const vApp = h('div', {
+        props: {
+          id: 'box',
+        },
+        children: [
+          h('h1', {
+            props: {
+              id: 'title',
+            },
+            children: ['hello world!'],
+          }),
+          h('p', {
+            props: {
+              class: 'p__container',
+              style: 'color: red'
+            },
+            children: ['p~']
+          })
+        ],
+      });
+
+      const $app = render(vApp)
+      mount($app, document.getElementById('root'))
+
+      console.log($app)
+    </script>
+  </body>
+</html>
