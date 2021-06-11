@@ -1,6 +1,6 @@
 # Interview-questions
 
-一些手写和自己感兴趣的前端题
+
 
 ## 目录
 
